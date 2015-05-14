@@ -6,4 +6,5 @@ RSpec.describe Wiki, type: :model do
       is_expected.to validate_presence_of :user
     end
   end
+
 end

@@ -1,9 +1,14 @@
+require 'faker'
+
 FactoryGirl.define do
   factory :wiki do
-    title "MyString"
-body "MyText"
-private false
-user nil
+    title { Faker::Lorem.word }
+    body { Faker::Lorem.word }
+    user
+  end
+
+  factory :invalid_wiki, parent: :wiki do
+    title nil
   end
 
 end
