@@ -1,9 +1,7 @@
-require 'faker'
-
 FactoryGirl.define do
   factory :wiki do
-    title { Faker::Lorem.word }
-    body { Faker::Lorem.word }
+    title { "Post Title" }
+    body { "Put a body here." }
     user
   end
 
