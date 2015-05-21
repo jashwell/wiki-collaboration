@@ -4,9 +4,11 @@ RSpec.describe WikisController, type: :controller do
 
   describe "GET #index" do
     it "populates an array of wikis" do
-      @wiki = FactoryGirl.render(:wiki)
+      @wiki = build(:wiki)
+      @wiki.save
+
       get :index
-      expect(assigns(:wiki)).to eq([wiki])
+      expect(assigns(:wikis)).to eq([@wiki])
     end
 
     it "renders the :index view" do
@@ -17,13 +19,17 @@ RSpec.describe WikisController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested wiki to @wiki" do
-      wiki = FactoryGirl(:wiki)
-      get :show, id: wiki
-      expect(assigns(:wiki)).to eq([wiki])
+      @wiki = build(:wiki)
+      @wiki.save
+      get :show, id: @wiki.id
+
+      expect(assigns(:wiki)).to eq(@wiki)
     end
 
     it "renders the :show template" do
-      get :show, id: wiki
+      @wiki = build(:wiki)
+      @wiki.save
+      get :show, id: @wiki
       expect(response).to render_template(:show)
     end
   end
@@ -34,6 +40,8 @@ RSpec.describe WikisController, type: :controller do
     end
 
     it "renders the :new template" do
+      @wiki = build(:wiki)
+      @wiki.save
       get :new, id: wiki
       expect(response).to render_template(:new)
     end
@@ -69,7 +77,8 @@ RSpec.describe WikisController, type: :controller do
 
   describe 'PUT update' do
     before :each do
-      @wiki = Factory(:wiki, title: "RSpec Title", body: "RSpec Body Text")
+      @wiki = build(:wiki, title: "RSpec Title", body: "RSpec Body Text")
+      @wiki.save
     end
 
     context "valid attributes" do
@@ -86,7 +95,7 @@ RSpec.describe WikisController, type: :controller do
           @wiki.body.should eq("RSpec Body Text")
       end
 
-      it "redirect to updated wiki" do 
+      it "redirect to updated wiki" do
         put :update, id: @wiki, wiki: Factory.attributes_for(:wiki)
         expect(response).to redirect_to(@wiki)
       end
@@ -116,7 +125,8 @@ RSpec.describe WikisController, type: :controller do
 
   describe 'DELETE destroy' do
     before :each do
-      @wiki = FactoryGirl(:wiki)
+      @wiki = build(:wiki)
+      @wiki.save
     end
 
     it "deletes the wiki" do
@@ -127,7 +137,7 @@ RSpec.describe WikisController, type: :controller do
 
     it "redirects to wiki#index" do
       delete :destroy, id: @wiki
-      expect(response).to redirect_to(wiki_url)
+      expect(response).to redirect_to(wikis_url)
     end
   end
 
