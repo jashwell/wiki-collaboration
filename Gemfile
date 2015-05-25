@@ -53,6 +53,8 @@ group :development, :test do
   gem 'bootstrap-sass'
   gem 'devise'
   gem 'figaro', '1.0'
+  gem 'pundit'
+  gem 'stripe'
 
   # Testing
   gem 'guard'
